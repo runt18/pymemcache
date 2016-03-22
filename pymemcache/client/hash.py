@@ -92,7 +92,7 @@ class HashClient(object):
             self.add_server(server, port)
 
     def add_server(self, server, port):
-        key = '%s:%s' % (server, port)
+        key = '{0!s}:{1!s}'.format(server, port)
 
         if self.use_pooling:
             client = PooledClient(
@@ -109,7 +109,7 @@ class HashClient(object):
         dead_time = time.time()
         self._failed_clients.pop((server, port))
         self._dead_clients[(server, port)] = dead_time
-        key = '%s:%s' % (server, port)
+        key = '{0!s}:{1!s}'.format(server, port)
         self.hasher.remove_node(key)
 
     def _get_client(self, key):
@@ -257,7 +257,7 @@ class HashClient(object):
             client_batches[client.server][key] = value
 
         for server, values in client_batches.items():
-            client = self.clients['%s:%s' % server]
+            client = self.clients['{0!s}:{1!s}'.format(*server)]
             new_args = list(args)
             new_args.insert(0, values)
             result = self._safely_run_func(
@@ -287,7 +287,7 @@ class HashClient(object):
             client_batches[client.server].append(key)
 
         for server, keys in client_batches.items():
-            client = self.clients['%s:%s' % server]
+            client = self.clients['{0!s}:{1!s}'.format(*server)]
             new_args = list(args)
             new_args.insert(0, keys)
             result = self._safely_run_func(

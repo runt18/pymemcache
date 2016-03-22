@@ -74,12 +74,12 @@ def _check_key(key, key_prefix=b''):
         try:
             key = key.encode('ascii')
         except UnicodeEncodeError:
-            raise MemcacheIllegalInputError("No ascii key: %r" % (key,))
+            raise MemcacheIllegalInputError("No ascii key: {0!r}".format(key))
     key = key_prefix + key
     if b' ' in key:
-        raise MemcacheIllegalInputError("Key contains spaces: %r" % (key,))
+        raise MemcacheIllegalInputError("Key contains spaces: {0!r}".format(key))
     if len(key) > 250:
-        raise MemcacheIllegalInputError("Key is too long: %r" % (key,))
+        raise MemcacheIllegalInputError("Key is too long: {0!r}".format(key))
     return key
 
 
@@ -609,7 +609,7 @@ class Client(object):
         result = self._misc_cmd(cmd, b'version', False)
 
         if not result.startswith(b'VERSION '):
-            raise MemcacheUnknownError("Received unexpected response: %s" % (result, ))
+            raise MemcacheUnknownError("Received unexpected response: {0!s}".format(result ))
 
         return result[8:]
 
@@ -685,8 +685,7 @@ class Client(object):
                         try:
                             _, key, flags, size = line.split()
                         except Exception as e:
-                            raise ValueError("Unable to parse line %s: %s"
-                                             % (line, str(e)))
+                            raise ValueError("Unable to parse line {0!s}: {1!s}".format(line, str(e)))
 
                     buf, value = _readvalue(self.sock, buf, int(size))
                     key = checked_keys[key]

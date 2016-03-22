@@ -33,10 +33,10 @@ def python_memcache_serializer(key, value):
         pass
     elif isinstance(value, int):
         flags |= FLAG_INTEGER
-        value = "%d" % value
+        value = "{0:d}".format(value)
     elif isinstance(value, long):
         flags |= FLAG_LONG
-        value = "%d" % value
+        value = "{0:d}".format(value)
     else:
         flags |= FLAG_PICKLE
         output = StringIO()

@@ -25,7 +25,7 @@ class TestHashClient(ClientTestMixin, unittest.TestCase):
         ip = '127.0.0.1'
 
         for vals in mock_socket_values:
-            s = '%s:%s' % (ip, current_port)
+            s = '{0!s}:{1!s}'.format(ip, current_port)
             c = self.make_client_pool(
                 (ip, current_port),
                 vals
